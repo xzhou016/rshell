@@ -1,42 +1,21 @@
 #include "../src/header/InternalHeaders.h"
 #include "../src/header/Composite.h"
 #include "../src/header/Tokenizer.h"
-
-using namespace std;
+#include "VarComposite.cpp"
 
 int main(int argc, char const *argv[]) {
 
-  //set to specific user login id
-  char host[200];
-  int host_name = gethostname(host, 200);
-  char* user_name;
 
-  //attempt to put user logins
-  try{
-    if (host_name != 0) {
-      throw 4;
-    }
-    if (getlogin() == NULL) {
-      throw "Login error";
-    }else
-      user_name= getlogin();
-
-  }catch(string e){
-    perror("Host has problems:");
-  }catch(int e ){
-    perror("User has errors:");
-  }
-
-  //display user login info
-  cout << user_name << "@" << host << "$ ";
+  print_host_user(); // print out login info
 
   //parsing begin
   string command_line;
   getline(cin, command_line);
 
-  //cout << command_line << endl;
-
-
+  //tokenize input
+  Tokenizer<string> token(command_line) ;
+  token.parse(); // separate string
+  //token.print();
 
 
   return 0;
