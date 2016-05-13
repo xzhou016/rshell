@@ -1,8 +1,8 @@
 #include "../src/header/InternalHeaders.h"
 #include "../src/header/Composite.h"
 #include "../src/header/Tokenizer.h"
-#include "VarComposite.cpp"
-
+//#include "VarComposite.cpp"
+using namespace std;
 int main(int argc, char const *argv[]) {
 
 

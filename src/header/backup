@@ -1,0 +1,35 @@
+//base class for executing commands
+class BaseCommand{
+public:
+BaseCommand::BaseCommand(){};
+
+virtual int run() = 0;
+};
+
+//root of a single command
+class Executable : public BaseCommand{
+private:
+string command;
+int PID;
+public:
+
+
+};
+
+
+
+class VarComposite : public BaseCommand
+{
+  private:
+    int PID;
+    vector<BaseCommand*> CMContainer;
+
+  public:
+  VarComposite();
+  ~VarComposite();
+  //void add(string command);
+  //void ANDhandler(string command);
+  //void ORhandler(string command);
+  int run();
+
+};

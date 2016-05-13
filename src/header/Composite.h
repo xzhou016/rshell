@@ -1,6 +1,9 @@
 #ifndef COMPOSITE_H
 #define COMPOSITE_H
+//#include <iostream>
+//#include <string>
 
+using namespace std;
 void print_host_user(){
   //set to specific user login id
   char host[200];
@@ -26,40 +29,6 @@ void print_host_user(){
   //display user login info
   cout << user_name << "@" << host << "$ ";
 }
-
-//base class for executing commands
-class BaseCommand{
-  BaseCommand::BaseCommand(){};
-
-  virtual int run() = 0;
-}
-
-//root of a single command
-class Executable : public BaseCommand{
-private:
-  string command;
-  int PID;
-public:
-
-}
-
-
-
-class VarComposite : public BaseCommand
-{
-		private:
-	    int PID;
-	    vector<BaseCommand*> CMContainer;
-
-		public:
-		VarComposite();
-		~VarComposite();
-		//void add(string command);
-		//void ANDhandler(string command);
-		//void ORhandler(string command);
-    int run();
-
-};
 
 
 
