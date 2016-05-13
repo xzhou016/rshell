@@ -19,4 +19,27 @@ To run this rshell from the terminal, enter the following commads:
 
 5) bin/rshell 
 
+Commands
+_____________
+the rshell accepts commands that already exist in the bin (e.g ls, mkdir, etc.) and also accepts special commands that do not (e.g cd, exit, etc.) so there is no reason to worry if a command you enter will not work or not.
+
+Connectors
+_____________
+Available connectors are:
+
+";"
+"||"
+"&&"
+
+In order to execute multiple commands in the same line, the rshell has designated connectors that allow you to link commands for simultaneous execution.  To create a list of commands, simply put a semicolon at the end of each command.  To incorporate desired logic into your chain of commands, you may add either the operator && or ||.  The || operator will only execute the command after it if the one before it fails. Oppositely, the command following the && operator will only execute if the command before the && operator has  successfully execute.  Here are a few examples to make this more clear:
+
+echo hello && ls  -> if "echo hello" fails for some reason, "ls" will not be executed.
+
+mkdir newdir || ls -> if "mkdir newdir" executes successfully, "ls" will not be executed.
+
+echo hello || mkdir newdir && ls -> if "echo hello" succeeds, "mkdir newdir will not execute" but the or logic will still be 1 so "ls" will execute. 
+
+Comments - #
+______________
+comments are an available feature with the rshell.  To create a comment, simply place a '#' in front of your command and it will be registered as a comment and thus, not executed. 
 
