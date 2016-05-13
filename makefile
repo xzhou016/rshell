@@ -1,4 +1,5 @@
 CC=g++
+CPPFLAGS = -std=c++11
 CC_FLAGS=-Wall -Werror -ansi -pedantic
 EXEC=rshell
 SOURCES=$(wildcard *.cpp)
