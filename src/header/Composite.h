@@ -34,17 +34,13 @@ template <typename T>
 void Vec_print(vector<T> print){
   for ( typename vector<T>::iterator i = print.begin(); i != print.end(); ++i ) {
     cout << *i << " ";
-  }//cout << ",";
+  }
 }
 
 template <typename T>
 void check_comment(vector<T> &tokens){
-  //int index = 0;
   for (unsigned int i = 0; i < tokens.size(); ++i) {
-    //index++;
-    //cout << tokens.size();
     for (unsigned int j = 0; j < tokens.at(i).size(); ++j) {
-      
       T temp_compare = tokens.at(i);
       if(temp_compare.at(j) == '#'){
         cout << i ;
@@ -116,16 +112,7 @@ void execute (vector<T> &token, int size,
   
   string tmp_con;
   //cout << index <<" "<< size << endl;
-  
-  //Vec_print(temp);
-  // if(index < size){
-  //   tmp_con = token[index - 1];
-  // }
-  // }else if(index == size){
-  //   tmp_con = "&&";
-  // }
-  //cout << connector << endl;
-  //cout << temp[index - 1]<< endl;
+
   if(token[index] == ";"){
     connector1 = 1;
   }else if(token[index] == "||"){
@@ -144,8 +131,7 @@ void execute (vector<T> &token, int size,
   
 
 
-  // /token.erase(token.begin(), token.begin() + index);
-  cout << connector1 << endl;
+ // cout << connector1 << endl; see the value of connector
   
 
   switch(connector1){
