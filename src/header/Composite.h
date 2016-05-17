@@ -16,14 +16,13 @@ void print_host_user(){
       throw 4;
     }
     if (getlogin() == NULL) {
-      throw "e";
+      //cout << "Can't get user name." ;
+      //throw "e";
     }else
       user_name= getlogin();
 
-  }catch(string e){
+  }catch(int e){
     perror("Host has problems:");
-  }catch(int e ){
-    perror("User has errors:");
   }
 
   //display user login info
