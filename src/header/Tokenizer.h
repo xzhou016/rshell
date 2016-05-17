@@ -1,9 +1,9 @@
 #ifndef TOKENIZER_H
 #define TOKENIZER_H
 
-//#include <iostream>
+#include <iostream>
 #include <boost/tokenizer.hpp>
-//#include <string>
+#include <string>
 
 using namespace std;
 using namespace boost;
@@ -14,9 +14,10 @@ class Tokenizer {
 private:
   //parse and store all commands inside vector
   string command_line;
-  vector<T> command_collection;
+  
 
 public:
+  vector<T> command_collection;
   Tokenizer(string command){
     command_line = command;
   }
@@ -39,7 +40,18 @@ public:
     }cout << endl;
   }
 
+//get vector of tokens
+  vector<T> getVector(){
+    return command_collection; 
+  }
+  
+  void setVector(vector<T> incomming_Vector){
+    command_collection = incomming_Vector;
+  }
+
 };
+
+
 
 
 #endif

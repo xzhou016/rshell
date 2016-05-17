@@ -1,10 +1,16 @@
 //base class for executing commands
 class BaseCommand{
 public:
-BaseCommand::BaseCommand(){};
+  BaseCommand(){};
 
 virtual int run() = 0;
 };
+
+class Executable: public BaseCommand{
+  private:
+  string token;
+  ve
+}
 
 //root of a single command
 class Executable : public BaseCommand{

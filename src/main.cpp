@@ -8,14 +8,17 @@ int main(int argc, char const *argv[]) {
 
   bool EXIT_FLAG = false;
     
-  while(EXIT_FLAG){
+  while(!EXIT_FLAG){
       //print_host_user(); // print out login info
     
       //parsing begin
       string command_line;
       getline(cin, command_line);
-      if(command_line = "exit")
+      if(command_line == "exit"){
         EXIT_FLAG = true;
+        return 0;
+      }
+
     
       //tokenize input
       Tokenizer<string> token(command_line) ;
