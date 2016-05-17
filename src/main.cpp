@@ -9,7 +9,7 @@ int main(int argc, char const *argv[]) {
   bool EXIT_FLAG = false;
     
   while(!EXIT_FLAG){
-      //print_host_user(); // print out login info
+      print_host_user(); // print out login info
     
       //parsing begin
       string command_line;
