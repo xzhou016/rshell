@@ -40,15 +40,6 @@ public:
     }cout << endl;
   }
 
-//get vector of tokens
-  vector<T> getVector(){
-    return command_collection; 
-  }
-  
-  void setVector(vector<T> incomming_Vector){
-    command_collection = incomming_Vector;
-  }
-
 };
 
 

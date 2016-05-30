@@ -1,0 +1,58 @@
+#include <queue>
+#include <stack>
+
+class ExeDriver {
+private:
+    ExecuteBase* root;
+    vector<string> internal_command_pointer;
+    
+    queue<ExecuteBase*> tokenQ;
+    //list of running 
+    queue<ExecuteBase*> runQ;
+    //push the last executing token onto stack
+    stack<ExecuteBase*> tokenStack;
+    string AND;
+    string OR;
+    string SEMICOLON;
+public:
+    ExeDriver(vector<string> &command_collection){
+        internal_command_pointer = command_collection;
+        this->AND = "&&";
+        this->OR = "||";
+        this->SEMICOLON = ";";
+    };
+    ~ExeDriver(){};
+    
+    void run(){
+        
+        // //check for arguement length, if < 1 exit
+        // if(internal_command_pointer.size() < 1){
+        //     Exit run_exit;
+        //     run_exit.run();
+        // }
+            
+        //command execution tree
+        Token* token = new Token();
+        for(unsigned int i = 0 ; i < internal_command_pointer.size() ; i++){
+            if(internal_command_pointer[i] == SEMICOLON) {
+                CommaConnector* cc = new CommaConnector(token);
+                runQ.push(cc);
+            }else if(internal_command_pointer[i] == AND) {
+                
+                //tokenQ.push(token);
+            }else if(internal_command_pointer[i] == OR){
+                
+            }else 
+                token->addArgs(internal_command_pointer[i]);
+        }
+        
+        runQ.front()->run();
+        
+        
+        //return false;
+        
+    };
+    
+    
+
+};

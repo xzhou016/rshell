@@ -1,38 +1,37 @@
+using namespace std;
 #include "../src/header/InternalHeaders.h"
 #include "../src/header/Composite.h"
+//#include "Composite.cpp"
+#include "../src/header/Tokens.h"
+#include "Tokens.cpp"
 #include "../src/header/Tokenizer.h"
 //#include "VarComposite.cpp"
+#include "../src/header/helpers.h"
+#include "../src/header/ExeDriver.h"
 
-using namespace std;
+
 int main(int argc, char const *argv[]) {
 
   bool EXIT_FLAG = false;
     
   while(!EXIT_FLAG){
-      print_host_user(); // print out login info
+      //print_host_user(); // print out login info
     
       //parsing begin
       string command_line;
       getline(cin, command_line);
       if(command_line == "exit"){
-        EXIT_FLAG = true;
-        return 0;
+        Exit* exit_program  = new Exit();
+        exit_program->run();
       }
-
-    
       //tokenize input
-      Tokenizer<string> token(command_line) ;
+      Tokenizer<string> token(command_line);
       token.parse(); // separate string
-      //token.print();
-      
-     //execvp(token.command_line)
-     //token.setVector(check_comment(token.getVector()));
       check_comment(token.command_collection);
-      //token.print();
-    
-      execute(token.command_collection,
-              token.command_collection.size(),
-              true, false , 0, 0);
+      
+      //token.print(); //test to see what the token looks like
+      
+      ExeDriver(token.command_collection);
       
   }
   return 0;
