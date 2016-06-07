@@ -23,7 +23,7 @@ void ExeDriver(vector<string> &command_collection) {
             token->addArgs(command_collection[i]);
             connectorQ.push(token);
             token = new Token();
-        }else{
+        }else if(command_collection.at(i) != SEMICOLON && command_collection.at(i) != OR && command_collection.at(i) != AND){
             //cout << "create new token: " <<command_collection[i]<< endl; // see what token is being added
             token->addArgs(command_collection[i]);
         }
@@ -52,6 +52,7 @@ void ExeDriver(vector<string> &command_collection) {
             runV.push_back(cc);
             //runQ.push(cc);
             left_token = commandQ.front();
+			continue;
         }else if(connectorQ.front()->getString() == AND){
             right_token = commandQ.front();
             AndConnector* ac = new AndConnector(left_token, right_token);
