@@ -10,7 +10,7 @@ public:
     //virtual void run(int i){};
     virtual bool run() = 0;
     virtual void print(){};
-    virtual string getString(){ return NULL;};
+    virtual string getString() = 0;
 };
 
 class AndConnector : public ExecuteBase {
@@ -35,6 +35,8 @@ public:
         }else 
             return false;
     };
+
+	virtual string getString() {return "&&";};
     
 };
 
@@ -56,6 +58,8 @@ public:
         }else
             return false;
     };    
+	virtual string getString() {return "||";};
+
 };
 
 class CommaConnector : public ExecuteBase {
@@ -73,6 +77,7 @@ public:
         else 
             return false;
     };
+	virtual string getString() {return ";";};
 };
 
 class Exit : public ExecuteBase {
@@ -84,6 +89,7 @@ public:
         exit(0);
         //return true;
     }
+	virtual string getString() {};	
 };
 
 #endif

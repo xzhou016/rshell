@@ -1,6 +1,6 @@
 #include <queue>
 
-vector<ExecuteBase*>  ExeDriver(vector<string> &command_collection) {
+void  ExeDriver(vector<string> &command_collection) {
     string AND = "&&", OR = "||" , SEMICOLON = ";";
 
     queue<Token*> commandQ; // temporary vector to hold processed token(commands & connectors)
@@ -45,61 +45,155 @@ vector<ExecuteBase*>  ExeDriver(vector<string> &command_collection) {
 	{
 		runV.push_back(token);
 		token->run();
-		return runV;
+		return;
 	}
 
 
 
     //second pass to build command tree
     while(!connectorQ.empty()) {
-        left_token = commandQ.front();   commandQ.pop();
-		if(!commandQ.empty())
+		if(connectorQ.front()->getString() == SEMICOLON)
 		{
-        	right_token = commandQ.front(); //commandQ.pop();
-    	}
+				if(runV.size() == 0)
+				{
+						left_token = commandQ.front();
+						commandQ.pop();
+						CommaConnector* c = new CommaConnector(left_token);
+						runV.push_back(c);
+						connectorQ.pop();
+						continue;
+				}
+
+				if(runV.at(runV.size()-1)->getString() == SEMICOLON)
+				{
+						left_token = commandQ.front();
+						commandQ.pop();
+						CommaConnector* cc = new CommaConnector(left_token);
+						runV.push_back(cc);
+						connectorQ.pop();
+				}
+				else if(runV.at(runV.size()-1)->getString() == AND || runV.at(runV.size()-1)->getString() == OR)
+				{
+						commandQ.pop();
+						connectorQ.pop();
+				}
+
+		}
+
+		else if(connectorQ.front()->getString() == AND)
+		{
+				if(runV.size() == 0)
+				{
+
+						left_token = commandQ.front();
+						commandQ.pop();
+						right_token = commandQ.front();
+						AndConnector* ac = new AndConnector(left_token, right_token);
+						runV.push_back(ac);
+						connectorQ.pop();
+						continue;
+				}
+				
+				else if(runV.at(runV.size()-1)->getString() == SEMICOLON)
+				{
+
+						left_token = commandQ.front();
+						commandQ.pop();
+						right_token = commandQ.front();
+						AndConnector* acc = new AndConnector(left_token, right_token);
+						runV.push_back(acc);
+						connectorQ.pop();
+
+				}
+
+				else if(runV.at(runV.size()-1)->getString() == AND || runV.at(runV.size()-1)->getString() == OR)
+			    {
+					cout << "NO" << endl;	
+					commandQ.pop();
+					right_token = commandQ.front();
+					AndConnector* aac = new AndConnector(runV.at(runV.size()-1), right_token);
+					runV.push_back(aac);
+					connectorQ.pop();
+				}
+		}
+		
+
+		else if(connectorQ.front()->getString() == OR)
+		{
+				if(runV.size() == 0)
+				{
+
+						left_token = commandQ.front();
+						commandQ.pop();
+						right_token = commandQ.front();
+						OrConnector* oc = new OrConnector(left_token, right_token);
+						runV.push_back(oc);
+						connectorQ.pop();
+				}
+  
+				else if(runV.at(runV.size()-1)->getString() == SEMICOLON)
+				{
+
+						left_token = commandQ.front();
+						commandQ.pop();
+						right_token = commandQ.front();
+						OrConnector* occ = new OrConnector(left_token, right_token);
+						runV.push_back(occ);
+						connectorQ.pop();
+
+				}
+				else if(runV.at(runV.size()-1)->getString() == AND || runV.at(runV.size()-1)->getString() == OR)
+			    {
+					commandQ.pop();
+					right_token = commandQ.front();
+					OrConnector* ooc = new OrConnector(runV.at(runV.size()-1), right_token);
+					runV.push_back(ooc);
+					connectorQ.pop();
+				}
+		}	
+
+       // left_token = commandQ.front();   commandQ.pop();
+		//if(!commandQ.empty())
+		//{
+        //	right_token = commandQ.front(); //commandQ.pop();
+    	//
         //******Debugging*******//
         //left_token->print(); 
         //cout << "|";
         //right_token->print();
 
-        if(connectorQ.front()->getString() == SEMICOLON){
-            CommaConnector* cc = new CommaConnector(left_token);
-            runV.push_back(cc);
-            //runQ.push(cc);
-            left_token = commandQ.front();
-			connectorQ.pop();
-			commandQ.pop();
-			continue;
-        }else if(connectorQ.front()->getString() == AND){
-            right_token = commandQ.front();
-            AndConnector* ac = new AndConnector(left_token, right_token);
-            runV.push_back(ac);
-            connectorQ.pop();
-			commandQ.pop();
-			continue;
-            //runQ.push(ac);
-        }else if(connectorQ.front()->getString() == OR){
-            right_token = commandQ.front();
-            OrConnector* oc = new OrConnector(left_token, right_token);
-            runV.push_back(oc);
-			connectorQ.pop();
-			commandQ.pop();
-			if(connectorQ.empty())
-			{
-					break;
-			}
+        //if(connectorQ.front()->getString() == SEMICOLON){
 
-			if(connectorQ.front()->getString() == SEMICOLON)
-			{
-					connectorQ.pop();
-			}
-			continue;
+          //  CommaConnector* cc = new CommaConnector(left_token);
+           // runV.push_back(cc);
+            //runQ.push(cc);
+           // left_token = commandQ.front();
+		//	connectorQ.pop();
+		//	commandQ.pop();
+		//	continue;
+        //}else if(connectorQ.front()->getString() == AND){
+           // right_token = commandQ.front();
+        //    AndConnector* ac = new AndConnector(left_token, right_token);
+         //   runV.push_back(ac);
+         //   connectorQ.pop();
+		//	continue;
+            //runQ.push(ac);
+        //}else if(connectorQ.front()->getString() == OR){
+           // right_token = commandQ.front();
+         //   OrConnector* oc = new OrConnector(left_token, right_token);
+         //   runV.push_back(oc);
+	//		connectorQ.pop();
+			//commandQ.pop();
+
+	//		continue;
             //runQ.push(oc);
-        }else{
-            runV.push_back(left_token);
+      //  }else{
+		//		cout << "OTHER" << endl;
+         //   runV.push_back(left_token);
             //runQ.push(right_token);
-        }
-    }
+      //  }
+	} 
+
     for (unsigned int i = 0; i < runV.size(); i++) {
         //runV[i]->print(); //print out the command being run
         runV.at(i)->run();
@@ -112,6 +206,5 @@ vector<ExecuteBase*>  ExeDriver(vector<string> &command_collection) {
     //     //runV[i]->print(); //print out the command being run
     //     runV[i]->run();
     // }
-    
-   return runV; 
+   
 }
