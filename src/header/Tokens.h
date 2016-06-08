@@ -13,7 +13,7 @@ public:
     Token(){
         this->args = new char*[256];
         this->args_index = 0;
-        this->runState = true;
+        this->runState = false;
     };
     ~Token(){};
     
@@ -21,10 +21,13 @@ public:
     void addArgs(string executable);
     
     virtual bool run();
+    virtual bool run(int in, int out);
     
     virtual void print();
     
     string getString();
+    
+    char** getArgs();
     
 };
 

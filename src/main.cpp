@@ -1,16 +1,16 @@
-using namespace std;
 #include "../src/header/InternalHeaders.h"
+#include "../src/header/Tokenizer.h"
+using namespace std;
 #include "../src/header/Composite.h"
-//#include "Composite.cpp"
 #include "../src/header/Tokens.h"
 #include "Tokens.cpp"
-#include "../src/header/Tokenizer.h"
-//#include "VarComposite.cpp"
+#include "../src/header/Redirection.h"
 #include "../src/header/helpers.h"
 #include "../src/header/ExeDriver.h"
 
 
-int main(int argc, char const *argv[]) {
+
+int main(int argc, char const *argv[]){
 
   bool EXIT_FLAG = false;
     
@@ -30,8 +30,7 @@ int main(int argc, char const *argv[]) {
       check_comment(token.command_collection);
       
       //token.print(); //test to see what the token looks like
-      
-      ExeDriver(token.command_collection);
+      ExeDriver(token.command_collection);//
       
   }
   return 0;
