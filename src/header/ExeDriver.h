@@ -226,26 +226,22 @@ void  ExeDriver(vector<string> &command_collection) {
                 connectorQ.pop();
             }
         }
-        if(!commandQ.empty()){
-            runV.push_back(commandQ.front());
-        }
+
     }
 
-    
+    if(!commandQ.empty()){
+        runV.push_back(commandQ.front());
+        commandQ.pop();
+    }
 
 
 
 
     for (unsigned int i = 0; i < runV.size(); i++) {
-        runV[i]->print();  //print out the command being run
-        cout << "runV size " << runV.size()  << endl;
+        //runV[i]->print();  //print out the command being run
+        //cout << "runV size " << runV.size()  << endl;
        //if(runV.at(i)->getString() == SEMICOLON){
              runV.at(i)->run();
        //}
     }
-
-//   if(runV.at(runV.size()-1)->getString() != SEMICOLON){
-//           runV.at(runV.size()-1)->run();
-//   }
-   
 }
