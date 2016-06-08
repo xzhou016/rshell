@@ -7,9 +7,15 @@ vector<ExecuteBase*>  ExeDriver(vector<string> &command_collection) {
     queue<Token*> connectorQ; // holds connectors
     vector<ExecuteBase*> runV;
     queue<ExecuteBase*> runQ;
-    
+    Token* left_token;
+	Token* right_token;
     Token* token = new Token();
     //first pass, turn token into commands and connectors
+
+
+
+
+							
     for(unsigned int i = 0 ; i < command_collection.size() ; i++){
         //
         if(command_collection[i] == SEMICOLON 
@@ -34,14 +40,23 @@ vector<ExecuteBase*>  ExeDriver(vector<string> &command_collection) {
             commandQ.push(token);
         }
     }    
-    
-    queue<Token*> to_be_returned = connectorQ;
+   	
+    if(connectorQ.size() == 0)
+	{
+		runV.push_back(token);
+		token->run();
+		return runV;
+	}
+
+
 
     //second pass to build command tree
-    for (unsigned int i = 0; i < connectorQ.size(); i++) {
-        Token* left_token = commandQ.front();   commandQ.pop();
-        Token* right_token = commandQ.front(); //commandQ.pop();
-    
+    while(!connectorQ.empty()) {
+        left_token = commandQ.front();   commandQ.pop();
+		if(!commandQ.empty())
+		{
+        	right_token = commandQ.front(); //commandQ.pop();
+    	}
         //******Debugging*******//
         //left_token->print(); 
         //cout << "|";
@@ -52,19 +67,24 @@ vector<ExecuteBase*>  ExeDriver(vector<string> &command_collection) {
             runV.push_back(cc);
             //runQ.push(cc);
             left_token = commandQ.front();
+			connectorQ.pop();
+			commandQ.pop();
 			continue;
         }else if(connectorQ.front()->getString() == AND){
             right_token = commandQ.front();
             AndConnector* ac = new AndConnector(left_token, right_token);
             runV.push_back(ac);
             connectorQ.pop();
+			commandQ.pop();
+			continue;
             //runQ.push(ac);
         }else if(connectorQ.front()->getString() == OR){
             right_token = commandQ.front();
             OrConnector* oc = new OrConnector(left_token, right_token);
             runV.push_back(oc);
 			connectorQ.pop();
-			if(connectorQ.size() == 0)
+			commandQ.pop();
+			if(connectorQ.empty())
 			{
 					break;
 			}
@@ -72,17 +92,14 @@ vector<ExecuteBase*>  ExeDriver(vector<string> &command_collection) {
 			if(connectorQ.front()->getString() == SEMICOLON)
 			{
 					connectorQ.pop();
-					cout << connectorQ.front()->getString() << endl;
 			}
-
+			continue;
             //runQ.push(oc);
         }else{
             runV.push_back(left_token);
             //runQ.push(right_token);
         }
-        commandQ.pop();
     }
-    
     for (unsigned int i = 0; i < runV.size(); i++) {
         //runV[i]->print(); //print out the command being run
         runV.at(i)->run();
