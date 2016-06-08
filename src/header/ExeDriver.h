@@ -1,6 +1,6 @@
 #include <queue>
 
-void ExeDriver(vector<string> &command_collection) {
+vector<ExecuteBase*>  ExeDriver(vector<string> &command_collection) {
     string AND = "&&", OR = "||" , SEMICOLON = ";";
 
     queue<Token*> commandQ; // temporary vector to hold processed token(commands & connectors)
@@ -35,7 +35,7 @@ void ExeDriver(vector<string> &command_collection) {
         }
     }    
     
-    
+    queue<Token*> to_be_returned = connectorQ;
 
     //second pass to build command tree
     for (unsigned int i = 0; i < connectorQ.size(); i++) {
@@ -57,23 +57,35 @@ void ExeDriver(vector<string> &command_collection) {
             right_token = commandQ.front();
             AndConnector* ac = new AndConnector(left_token, right_token);
             runV.push_back(ac);
+            connectorQ.pop();
             //runQ.push(ac);
         }else if(connectorQ.front()->getString() == OR){
             right_token = commandQ.front();
             OrConnector* oc = new OrConnector(left_token, right_token);
             runV.push_back(oc);
+			connectorQ.pop();
+			if(connectorQ.size() == 0)
+			{
+					break;
+			}
+
+			if(connectorQ.front()->getString() == SEMICOLON)
+			{
+					connectorQ.pop();
+					cout << connectorQ.front()->getString() << endl;
+			}
+
             //runQ.push(oc);
         }else{
             runV.push_back(left_token);
             //runQ.push(right_token);
         }
         commandQ.pop();
-        connectorQ.pop();
     }
     
     for (unsigned int i = 0; i < runV.size(); i++) {
         //runV[i]->print(); //print out the command being run
-        runV[i]->run();
+        runV.at(i)->run();
         //runQ.front()->run();
         //runQ.pop();
     }
@@ -84,5 +96,5 @@ void ExeDriver(vector<string> &command_collection) {
     //     runV[i]->run();
     // }
     
-    
+   return runV; 
 }
