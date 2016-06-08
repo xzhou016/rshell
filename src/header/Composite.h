@@ -11,6 +11,7 @@ public:
     virtual bool run() = 0;
     virtual void print(){};
     virtual string getString() = 0;
+
 };
 
 class AndConnector : public ExecuteBase {
@@ -37,6 +38,8 @@ public:
     };
 
 	virtual string getString() {return "&&";};
+	ExecuteBase* getLeft() {return left;};
+	ExecuteBase* getRight() {return right;};
     
 };
 
@@ -59,6 +62,8 @@ public:
             return false;
     };    
 	virtual string getString() {return "||";};
+	ExecuteBase* getLeft() {return left;};
+	ExecuteBase* getRight() {return right;};
 
 };
 
