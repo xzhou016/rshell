@@ -4,8 +4,6 @@
 cat < testIO/testInput
 A-Z < testIO/testInput
 
-***add more here
-
 ls > testIO/testOutput
 echo muh test > testIO/testOutput
 
