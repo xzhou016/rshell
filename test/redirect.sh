@@ -1,6 +1,6 @@
 #!/bin/sh
 ### Input Redirection test ###
-./bin/rshell <<EOF
+../bin/rshell <<EOF
 cat < testIO/testInput
 A-Z < testIO/testInput
 
