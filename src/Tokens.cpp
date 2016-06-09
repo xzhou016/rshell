@@ -33,8 +33,6 @@ bool Token::run(){
 //special run function for redirection
 bool Token::run(int in, int out){
     
-    args[args_index] = '\0';
-    
     pid_t pid = fork();
     int state;
     
@@ -43,6 +41,8 @@ bool Token::run(int in, int out){
             runState = false;
         }else if(pid == 0){
             
+            args[args_index] = '\0';
+            
             //redirect in
             if( in < 0){
                 perror("cannot open file");
@@ -50,27 +50,23 @@ bool Token::run(int in, int out){
             }else if(dup2(in, 0) < 0){
                 perror("cannot dup");
                 runState = false;
-            }else if(close(in) < 0){
-                perror("cannot close");
-                runState = false;
+                exit(1);
             }
-            
             //redirect out
-            if(in == 0 ){
+            if(out < 0 ){
                 perror("cannot open file");
                 runState = false;
             }else if(dup2(out, 1) < 0){
                 perror("cannot dup");
                 runState = false;
-            }else if(close(in) < 0){
-                perror("cannot close");
-                runState = false;
+                exit(1);
             }
             
             //run the exevp
             if(execvp(args[0], args)){
                 perror("cannot execvp");
                 runState = false;
+                exit(1);
             }
         }else if(pid > 0) {
             if(waitpid(pid, &state, 0) == -1)

@@ -15,7 +15,7 @@ public:
     //add data in right token to left token
     //and execute to the file with filename in right token
     virtual bool run(){
-        //cout << "in indirect in" << endl;
+        cout << "in indirect out" << endl;
         
         left->addArgs(right->getString());
         //right->addArgs("\0");
@@ -47,7 +47,7 @@ public:
     //add all the piping extensions in right token to left token
     // run with left token to read from file
     virtual bool run(){
-        //cout << "in indirect out" << endl;
+        cout << "in indirect out" << endl;
         
         left->addArgs(right->getString());
         right->addArgs("\0");

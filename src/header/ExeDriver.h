@@ -50,20 +50,11 @@ void  ExeDriver(vector<string> &command_collection) {
     }
     
     // Just run the token since there is no connector
-    if(connectorQ.size() == 0)
-    {
+    if(connectorQ.size() == 0){
         runV.push_back(token);
         token->run();
         return;
     }
-    
-    // for (unsigned int i = 0; i < runV.size() ; i++) {
-    //     ExecuteBase* temporary = runV.at(i);
-    //     temporary->print() ; cout << " " ;
-    //     //delete temporary;
-    // }cout << endl;
-    
-    //cout << runV.at(0) << runV.at(1) << runV.at(2) << endl;
 
     //second pass to build command tree
     while(!connectorQ.empty()){
@@ -147,7 +138,7 @@ void  ExeDriver(vector<string> &command_collection) {
                 runV.push_back(ooc);
                 connectorQ.pop();
             }
-        }else if(runV.at(runV.size()-1)->getString() == REDIRIN){
+        }else if(connectorQ.front()->getString() == REDIRIN){
             if(runV.size() == 0){
                 left_token = commandQ.front();
                 commandQ.pop();
@@ -174,32 +165,37 @@ void  ExeDriver(vector<string> &command_collection) {
                 runV.push_back(rdIn3);
                 connectorQ.pop();
             }
-        }else if(runV.at(runV.size()-1)->getString() == REDIROUT1 || runV.at(runV.size()-1)->getString() == REDIROUT2 ){
+        }else if(connectorQ.front()->getString() == REDIROUT1 || connectorQ.front()->getString() == REDIROUT2 ){
             if(runV.size() == 0){
+                //cout << "Command Queue Size before: " << commandQ.size() << endl;
                 left_token = commandQ.front();
                 commandQ.pop();
                 right_token = commandQ.front();
                 RedirectOut* rdOut1 = new RedirectOut(left_token, right_token);
                 runV.push_back(rdOut1);
                 connectorQ.pop();
+                commandQ.pop();
+                //cout << "Command Queue Size after: " << commandQ.size() << endl;
             }else if(runV.at(runV.size()-1)->getString() == SEMICOLON){
                 left_token = commandQ.front();
                 commandQ.pop();
                 right_token = commandQ.front();
-                RedirectIn* rdOut2 = new RedirectIn(left_token, right_token);
+                RedirectOut* rdOut2 = new RedirectOut(left_token, right_token);
                 runV.push_back(rdOut2);
                 connectorQ.pop();
+                commandQ.pop();
             }else if(runV.at(runV.size()-1)->getString() == AND 
                     || runV.at(runV.size()-1)->getString() == OR
                     || runV.at(runV.size()-1)->getString() == REDIRIN
                     || runV.at(runV.size()-1)->getString() == PIPE){
-                commandQ.pop();
+                //commandQ.pop();
                 right_token = commandQ.front();
-                RedirectIn* rdOut3 = new RedirectIn(runV.at(runV.size()-1), right_token);
+                RedirectOut* rdOut3 = new RedirectOut(runV.at(runV.size()-1), right_token);
                 runV.push_back(rdOut3);
                 connectorQ.pop();
+                commandQ.pop();
             }
-        }else if(runV.at(runV.size()-1)->getString() == PIPE){
+        }else if(connectorQ.front()->getString() == PIPE){
             if(runV.size() == 0){
                 left_token = commandQ.front();
                 commandQ.pop();
@@ -238,8 +234,8 @@ void  ExeDriver(vector<string> &command_collection) {
 
 
     for (unsigned int i = 0; i < runV.size(); i++) {
-        //runV[i]->print();  //print out the command being run
         //cout << "runV size " << runV.size()  << endl;
+        //runV[i]->print();  //print out the command being run
        //if(runV.at(i)->getString() == SEMICOLON){
              runV.at(i)->run();
        //}
