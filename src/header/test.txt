@@ -1,0 +1,15 @@
+echo hello; echo this && echo that || ls && echo world; echo finish
+
+echo ww && git status && echo hi; ls; echo ay || git status && echo finish;
+
+echo hh; ls; git status; echo meme
+
+echo what && echo is && echo goingg && echo on && ls;
+
+echo this && echo test && echo without && echo semic 
+
+git status; ls && echo workwork || ls && echo aagain || echo finisher
+
+ls; echo hi; git status; echo meme;
+
+echo super && echo long || echo test && echo hope && echo it || works || ls
