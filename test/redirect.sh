@@ -6,5 +6,8 @@ A-Z < testIO/testInput
 
 ***add more here
 
+ls > testIO/testOutput
+echo muh test > testIO/testOutput
+
 exit
 EOF
